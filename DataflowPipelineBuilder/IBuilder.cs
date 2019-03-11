@@ -6,8 +6,12 @@ namespace DataflowPipelineBuilder
     {
         IBuilder<TOrigin, TTarget> Then<TTarget>(IPropagatorBlock<T, TTarget> block);
 
+        ITargetBlock<TTarget> Then<TTarget>(ITargetBlock<TTarget> block);
+
         IForkBuilder<TOrigin, T> Fork();
 
         IPropagatorBlock<TOrigin, T> End();
+        
+        
     }
 }

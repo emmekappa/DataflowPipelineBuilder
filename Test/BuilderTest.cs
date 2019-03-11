@@ -32,6 +32,30 @@ namespace Test
             Assert.That(actual.Count(b => b.Count == 3), Is.EqualTo(3));
             Assert.That(actual.Count(b => b.Count == 1), Is.EqualTo(1));
         }
+        
+        [Test]
+        public async Task ActionTest()
+        {
+            var builder = 
+                new Builder();
+
+            var pipelineBlock =
+                builder.FromEnumerable(new[] {"a", "b", "c", "d"})
+                    .Select(x => x)
+                    
+                    .EndWithAction<>()
+            
+            ActionBlock<string> a = new ActionBlock<string>(null);
+            var w = new WrapperBlock<string, string>(null, null );
+            w.
+
+            var actual = 
+                await pipelineBlock.ReceiveAllAsync();
+
+            Assert.That(actual.Count, Is.EqualTo(4));
+            Assert.That(actual.Count(b => b.Count == 3), Is.EqualTo(3));
+            Assert.That(actual.Count(b => b.Count == 1), Is.EqualTo(1));
+        }
 
         [Test]
         public async Task Fork()
