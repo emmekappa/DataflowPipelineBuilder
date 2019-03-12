@@ -30,12 +30,15 @@ after_build:
           dotnet pack .\DataflowPipelineBuilder -o ..\Artifacts --version-suffix=$env:APPVEYOR_REPO_BRANCH
         }
 
-artifacts:
-  - path: Artifacts\*
-
+#artifacts:
+#  - path: Artifacts\*
+    
+deploy_script:
+  - appveyor PushArtifact Artifacts\*.nupkg
+    
 # settings are the same for  both Nuget providers, except "on:" condition
-deploy:
-  - provider: NuGet
+#deploy:
+#  - provider: NuGet
 #    on:
 #      branch: master
 #      
