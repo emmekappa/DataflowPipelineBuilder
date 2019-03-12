@@ -29,6 +29,7 @@ deploy:
   - provider: NuGet
     on:
       branch: master
+      
   - provider: NuGet
     on:
       appveyor_repo_tag: true

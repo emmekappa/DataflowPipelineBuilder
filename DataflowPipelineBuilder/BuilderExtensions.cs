@@ -69,10 +69,29 @@ namespace DataflowPipelineBuilder
         ) => source.Fork()
                    .Then(leftBranch, rightBranch);
         
-        /*public static IDataflowBlock EndWithAction<TOrigin, T>
+        public static EndBuilder Action<TOrigin, T>
         (
             this IBuilder<TOrigin, T> builder,
             Func<T, Task> action, ExecutionDataflowBlockOptions dataflowBlockOptions
-        ) => builder.Then(new ActionBlock<T>(action, dataflowBlockOptions));*/
+        ) => builder.Then(new ActionBlock<T>(action, dataflowBlockOptions));
+        
+        public static EndBuilder Action<TOrigin, T>
+        (
+            this IBuilder<TOrigin, T> builder,
+            Func<T, Task> action
+        ) => builder.Then(new ActionBlock<T>(action));
+        
+        public static EndBuilder Action<TOrigin, T>
+        (
+            this IBuilder<TOrigin, T> builder,
+            Action<T> action, ExecutionDataflowBlockOptions dataflowBlockOptions
+        ) => builder.Then(new ActionBlock<T>(action, dataflowBlockOptions));
+        
+        public static EndBuilder Action<TOrigin, T>
+        (
+            this IBuilder<TOrigin, T> builder,
+            Action<T> action
+        ) => builder.Then(new ActionBlock<T>(action));
+
     }
 }

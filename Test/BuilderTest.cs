@@ -59,6 +59,31 @@ namespace Test
             actionMock.Verify(x => x("d"), Times.Once);
             actionMock.VerifyNoOtherCalls();
         }
+        
+        [Test]
+        public async Task ActionTest()
+        {
+            var actionMock = new Mock<Action<string>>();
+
+            var builder = 
+                new Builder();
+            
+
+            var pipelineBlock =
+                builder.FromEnumerable(new[] {"a", "b", "c", "d"})
+                    .Select(x => x)
+                    .Action(actionMock.Object)
+                    .End();
+            
+            await pipelineBlock.Completion;
+            
+            actionMock.Verify(x => x("a"), Times.Once);
+            actionMock.Verify(x => x("b"), Times.Once);
+            actionMock.Verify(x => x("c"), Times.Once);
+            actionMock.Verify(x => x("d"), Times.Once);
+            actionMock.VerifyNoOtherCalls();
+        }
+        
 
         [Test]
         public async Task Fork()
