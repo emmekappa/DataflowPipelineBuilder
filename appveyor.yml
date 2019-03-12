@@ -1,0 +1,33 @@
+version: 1.0.{build}
+image: 
+  - Ubuntu1804
+  - Visual Studio 2017
+
+#build:
+#  publish_nuget: true
+#  publish_nuget_symbols: true
+#  include_nuget_references: true
+  verbosity: minimal
+
+
+after_build:
+  - ps: >- 
+        if ($env:APPVEYOR_REPO_TAG -eq $true) {
+          dotnet pack .\DataflowPipelineBuilder -o .\Artifacts
+        } 
+        else {
+          dotnet pack .\DataflowPipelineBuilder -o .\Artifacts --version-suffix=$env:APPVEYOR_BUILD_NUMBER
+        }
+
+artifacts:
+  - path: .\Artifacts\*
+
+# settings are the same for  both Nuget providers, except "on:" condition
+deploy:
+  - provider: NuGet
+    on:
+      branch: master
+  - provider: NuGet
+    ...
+    on:
+      appveyor_repo_tag: true

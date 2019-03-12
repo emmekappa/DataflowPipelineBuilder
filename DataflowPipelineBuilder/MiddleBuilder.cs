@@ -20,15 +20,15 @@ namespace DataflowPipelineBuilder
             return new MiddleBuilder<TOrigin, TNewTarget>(_start, block);
         }
 
-        public ITargetBlock<TTarget> Then<TTarget>(ITargetBlock<TTarget> block)
+        public EndBuilder Then(ITargetBlock<TTarget> block)
         {
             _current.LinkTo(block, new DataflowLinkOptions { PropagateCompletion = true });
-            return block;
+            return new EndBuilder(block);
         }
 
         public IForkBuilder<TOrigin, TTarget> Fork() => new ForkBuilder<TOrigin, TTarget>(_start, _current);
 
         public IPropagatorBlock<TOrigin, TTarget> End() => 
-            new WrapperBlock<TOrigin, TTarget>(_start, _current);
+            new PropagatorBlockWrapper<TOrigin, TTarget>(_start, _current);
     }
 }
