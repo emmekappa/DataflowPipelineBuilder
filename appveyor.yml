@@ -27,7 +27,7 @@ after_build:
           dotnet pack .\DataflowPipelineBuilder -o ..\Artifacts
         } 
         else {
-          dotnet pack .\DataflowPipelineBuilder -o ..\Artifacts --version-suffix=$env:APPVEYOR_BUILD_NUMBER
+          dotnet pack .\DataflowPipelineBuilder -o ..\Artifacts --version-suffix=$env:APPVEYOR_REPO_BRANCH
         }
 
 artifacts:
@@ -36,9 +36,9 @@ artifacts:
 # settings are the same for  both Nuget providers, except "on:" condition
 deploy:
   - provider: NuGet
-    on:
-      branch: master
-      
-  - provider: NuGet
-    on:
-      appveyor_repo_tag: true
+#    on:
+#      branch: master
+#      
+#  - provider: NuGet
+#    on:
+#      appveyor_repo_tag: true
