@@ -34,7 +34,7 @@ after_build:
 #  - path: Artifacts\*
     
 deploy_script:
-  - appveyor PushArtifact Artifacts\*.nupkg
+  - ps: appveyor PushArtifact Artifacts\*.nupkg
     
 # settings are the same for  both Nuget providers, except "on:" condition
 #deploy:
