@@ -60,8 +60,8 @@
   image:
     - Ubuntu1804
     - Visual Studio 2017
-  environment:
-    - EnableNuGetPackageRestore: true
+  before_build:
+    - dotnet restore
 #  dotnet_csproj:
 #    patch: true
 #    file: '**\*.csproj'
