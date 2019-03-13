@@ -35,7 +35,7 @@
     - Ubuntu1804
   version: 1.0.{build}-pre
   configuration: Debug
-  skip_branch_with_pr: true
+  #skip_branch_with_pr: true
   dotnet_csproj:
     patch: true
     file: '**\*.csproj'
