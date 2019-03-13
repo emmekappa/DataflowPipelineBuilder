@@ -22,6 +22,8 @@
     publish_nuget_symbols: true
     include_nuget_references: true
     verbosity: minimal
+  nuget:
+    disable_publish_on_pr: true
   
 
 # configuration for all branches starting from "dev-"
