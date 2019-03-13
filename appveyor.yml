@@ -8,7 +8,6 @@
     - Ubuntu1804
   version: 1.0.{build}
   configuration: Release
-  skip_branch_with_pr: true
   dotnet_csproj:
     patch: true
     file: '**\*.csproj'
@@ -61,8 +60,8 @@
   image:
     - Ubuntu1804
     - Visual Studio 2017
-  before_build:
-    - ps: dotnet restore
+  environment:
+    - EnableNuGetPackageRestore: true
 #  dotnet_csproj:
 #    patch: true
 #    file: '**\*.csproj'
