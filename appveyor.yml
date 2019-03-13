@@ -17,8 +17,6 @@
     assembly_version: '{version}'
     file_version: '{version}'
     informational_version: '{version}'
-  nuget:
-    disable_publish_on_pr: true
   build:
     publish_nuget: true
     publish_nuget_symbols: true
@@ -36,6 +34,7 @@
     - Ubuntu1804
   version: 1.0.{build}-pre
   configuration: Debug
+  skip_branch_with_pr: true
   dotnet_csproj:
     patch: true
     file: '**\*.csproj'
@@ -44,8 +43,6 @@
     assembly_version: '{version}'
     file_version: '{version}'
     informational_version: '{version}'
-  nuget:
-    disable_publish_on_pr: true
   build:
     publish_nuget: true
     publish_nuget_symbols: true
