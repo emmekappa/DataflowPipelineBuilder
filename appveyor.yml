@@ -9,6 +9,8 @@
     - Visual Studio 2017
   version: 1.0.{build}
   configuration: Release
+  before_build:
+    - ps: dotnet restore
   build:
     publish_nuget: true
     publish_nuget_symbols: true
@@ -27,6 +29,8 @@
     - Visual Studio 2017
   version: 1.0.{build}-pre
   configuration: Debug
+  before_build:
+    - ps: dotnet restore
   build:
     publish_nuget: true
     publish_nuget_symbols: true
@@ -43,7 +47,8 @@
   image:
     - Ubuntu1804
     - Visual Studio 2017
-
+  before_build:
+    - ps: dotnet restore
 #  dotnet_csproj:
 #    patch: true
 #    file: '**\*.csproj'
