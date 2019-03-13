@@ -8,6 +8,7 @@
     - Ubuntu1804
   version: 1.0.{build}
   configuration: Release
+  skip_branch_with_pr: true
   dotnet_csproj:
     patch: true
     file: '**\*.csproj'
