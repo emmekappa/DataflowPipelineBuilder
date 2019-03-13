@@ -1,7 +1,7 @@
 configuration: Debug
 image: 
   - Ubuntu1804
-  - Visual Studio 2017
+  #- Visual Studio 2017
 version: 1.0.{build}-pre
 dotnet_csproj:
   patch: true
