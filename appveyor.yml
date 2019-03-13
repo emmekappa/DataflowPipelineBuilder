@@ -6,11 +6,16 @@
       - master
   image:
     - Ubuntu1804
-    - Visual Studio 2017
   version: 1.0.{build}
   configuration: Release
-  before_build:
-    - ps: dotnet restore
+  dotnet_csproj:
+    patch: true
+      file: '**\*.csproj'
+      version: '{version}'
+      package_version: '{version}'
+      assembly_version: '{version}'
+      file_version: '{version}'
+      informational_version: '{version}'
   build:
     publish_nuget: true
     publish_nuget_symbols: true
@@ -28,6 +33,14 @@
     - Ubuntu1804
   version: 1.0.{build}-pre
   configuration: Debug
+  dotnet_csproj:
+    patch: true
+      file: '**\*.csproj'
+      version: '{version}'
+      package_version: '{version}'
+      assembly_version: '{version}'
+      file_version: '{version}'
+      informational_version: '{version}'
   build:
     publish_nuget: true
     publish_nuget_symbols: true
