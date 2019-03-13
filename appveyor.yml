@@ -4,6 +4,9 @@
   branches:
     only:
       - master
+  image:
+    - Ubuntu1804
+    - Visual Studio 2017
   version: 1.0.{build}
   configuration: Release
   build:
@@ -19,6 +22,9 @@
   branches:
     only:
       - /feature/.*
+  image:
+    - Ubuntu1804
+    - Visual Studio 2017
   version: 1.0.{build}-pre
   configuration: Debug
   build:
