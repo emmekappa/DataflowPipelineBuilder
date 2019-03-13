@@ -23,7 +23,7 @@
 -
   branches:
     only:
-      - /feature/.*
+      - feature/.*
   image:
     - Ubuntu1804
   version: 1.0.{build}-pre
