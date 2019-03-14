@@ -13,7 +13,7 @@ namespace DataflowPipelineBuilder
         IPropagatorBlock<TOrigin, T> End();
     }
 
-        public class EndBuilder
+    public class EndBuilder
         {
         private readonly IDataflowBlock _block;
 

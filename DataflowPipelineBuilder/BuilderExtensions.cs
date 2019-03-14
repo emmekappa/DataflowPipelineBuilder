@@ -93,5 +93,18 @@ namespace DataflowPipelineBuilder
             Action<T> action
         ) => builder.Then(new ActionBlock<T>(action));
 
+        public static IBuilder<TOrigin, T> Broadcast<TOrigin, T>
+        (
+            this IBuilder<TOrigin, T> builder,
+            params ITargetBlock<T>[] blocks
+        ) //=> builder.Action(x => Task.WhenAll(blocks.Select(block => block.SendAsync(x))));
+        {
+            var broadcastBlock = new BroadcastBlock<T>(x => x);
+            foreach (var block in blocks)
+            {
+                broadcastBlock.LinkTo(block, new DataflowLinkOptions { PropagateCompletion = true });
+            }
+            return builder.Then(broadcastBlock);
+        }
     }
 }

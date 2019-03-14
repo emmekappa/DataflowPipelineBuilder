@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
 using System.Xml.Linq;
@@ -82,6 +83,65 @@ namespace Test
             actionMock.Verify(x => x("c"), Times.Once);
             actionMock.Verify(x => x("d"), Times.Once);
             actionMock.VerifyNoOtherCalls();
+        }
+        
+        [Test]
+        public async Task BroadcastTest()
+        {
+            var actionMock = new Mock<Action<string>>();
+
+            var builder = 
+                new Builder();
+
+
+            var actionBlock = new ActionBlock<string>(actionMock.Object);
+            var copyBufferBlock = new BufferBlock<string>();
+            
+            builder.FromEnumerable(new[] {"a", "b", "c", "d"})
+                .Select(x => x)
+                .Broadcast(actionBlock, copyBufferBlock)
+                .End();
+            
+            await actionBlock.Completion;
+            
+            actionMock.Verify(x => x("a"), Times.Once);
+            actionMock.Verify(x => x("b"), Times.Once);
+            actionMock.Verify(x => x("c"), Times.Once);
+            actionMock.Verify(x => x("d"), Times.Once);
+            actionMock.VerifyNoOtherCalls();
+
+            var copyBufferBlockResult = await copyBufferBlock.ReceiveAllAsync();
+            Assert.That(copyBufferBlockResult, Is.EquivalentTo(new [] {"a","b","c","d"}));
+            
+        }
+        
+        [Test]
+        public async Task BroadcastShouldNotBlockThePipeline()
+        {
+            var actionMock = new Mock<Action<string>>();
+
+            var builder = 
+                new Builder();
+
+
+            var actionBlock = new ActionBlock<string>(x =>
+            {
+                actionMock.Object(x);
+                Thread.Sleep(500); 
+            });
+            var copyBufferBlock = new BufferBlock<string>();
+            
+            var pipelineBlock =
+                builder.FromEnumerable(new[] {"a", "b", "c", "d"})
+                    .Select(x => x)
+                    .Broadcast(actionBlock, copyBufferBlock)
+                    .End();
+
+            
+            await pipelineBlock.Completion;
+            
+            Assert.That(actionBlock.Completion.IsCompleted, Is.False, 
+                "Should still running even if the pipeline is completed");            
         }
         
 

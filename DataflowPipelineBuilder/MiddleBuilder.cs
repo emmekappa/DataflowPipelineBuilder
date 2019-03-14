@@ -16,7 +16,6 @@ namespace DataflowPipelineBuilder
         public IBuilder<TOrigin, TNewTarget> Then<TNewTarget>(IPropagatorBlock<TTarget, TNewTarget> block)
         {
             _current.LinkTo(block, new DataflowLinkOptions { PropagateCompletion = true });
-
             return new MiddleBuilder<TOrigin, TNewTarget>(_start, block);
         }
 
